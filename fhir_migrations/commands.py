@@ -6,7 +6,7 @@ Defines number of commands relevant for creating and managing migrations.
 from flask import Blueprint
 import click
 
-from migrations.migration import Migration
+from fhir_migrations.migration import Migration
 
 migration_blueprint = Blueprint('migration', __name__, cli_group=None)
 migration_manager = Migration()

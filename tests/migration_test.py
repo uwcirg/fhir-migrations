@@ -1,7 +1,7 @@
 import os
 import pytest
 from unittest.mock import patch, mock_open
-from migrations.migration import Migration
+from fhir_migrations.migration import Migration
 from pytest import fixture
 
 @fixture

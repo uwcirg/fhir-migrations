@@ -22,8 +22,8 @@ import os
 import uuid
 import imp
 
-from migrations.migration_resource import MigrationManager
-from migrations.utils import LinkedList
+from fhir_migrations.migration_resource import MigrationManager
+from fhir_migrations.utils import LinkedList
 from isacc_messaging.audit import audit_entry
 
 

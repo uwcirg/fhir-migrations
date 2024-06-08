@@ -1,5 +1,5 @@
 import pytest
-from migrations.utils import Node, LinkedList
+from fhir_migrations.utils import Node, LinkedList
 from pytest import fixture
 
 
