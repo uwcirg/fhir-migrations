@@ -21,10 +21,13 @@ For branching/conflict resolution, manually review the migration files.
 import os
 import uuid
 import imp
+import logging
 
 from fhir_migrations.migration_resource import MigrationManager
 from fhir_migrations.utils import LinkedList
-from isacc_messaging.audit import audit_entry
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 class Migration:
@@ -51,14 +54,14 @@ class Migration:
             try:
                 self.migration_sequence.build_list_from_dictionary(migration_nodes)
             except KeyError as ke:
-                audit_entry(f"Downrevision migration is missing in the sequence", level='error')
+                logger.error(f"Downrevision migration is missing in the sequence")
                 raise ke
             except Exception as e:
-                audit_entry(f"General exception encountered: {str(e)}", level='error')
+                logger.error(f"General exception encountered: {str(e)}")
                 raise e
         else:
             error_message = "No valid migration files."
-            audit_entry(error_message, level='info')
+            logger.exception(error_message)
 
 
     def get_migrations(self) -> list:
@@ -99,10 +102,7 @@ class Migration:
             filename = self.migrations_locations[migration_id] + ".py"
         except KeyError as e:
             message = f"No corresponding file found for migration {migration_id}"
-            audit_entry(
-                message,
-                level='error'
-            )
+            logger.error(message)
             raise ValueError(message)
 
         down_revision = None
@@ -113,17 +113,11 @@ class Migration:
                 down_revision = getattr(migration_module, "down_revision", None)
             except Exception as e:
                 message = f"Error loading migration script {filename}: {e}"
-                audit_entry(
-                    message,
-                    level='debug'
-                )
+                logger.error(message)
                 raise e
         else:
             message = f"Migration script {filename} does not exist."
-            audit_entry(
-                message,
-                level='debug'
-            )
+            logger.info(message)
 
         return down_revision
 
@@ -131,27 +125,19 @@ class Migration:
         """Generate a new migration script with basic functions."""
         self.build_migration_sequence()
         if migration_name in self.migrations_locations.values():
-            error_message = f"That name already exist. Use a new name for the migration"
+            message = f"That name already exist. Use a new name for the migration"
+            logger.error(message)
 
-            audit_entry(
-                error_message,
-                level='error'
-            )
-
-            raise ValueError(error_message)
+            raise ValueError(message)
 
         current_migration_id = str(self.get_latest_applied_migration_from_fhir())
         latest_created_migration_id = str(self.get_latest_created_migration())
 
         if current_migration_id != latest_created_migration_id:
-            error_message = f"There exists not applied migration."
+            message = f"There exists not applied migration."
+            logger.error(message)
 
-            audit_entry(
-                error_message,
-                level='error'
-            )
-
-            raise RuntimeError(error_message)
+            raise RuntimeError(message)
 
         new_id = str(uuid.uuid4())
         migration_filename = f"{migration_name}.py"
@@ -171,10 +157,7 @@ class Migration:
             migration_file.write("    print('downgraded')\n")
             migration_file.write("\n")
 
-        audit_entry(
-            f"Generated new migration {migration_name}",
-            level='info'
-        )
+        logger.info(f"Generated new migration {migration_name}")
 
         return migration_filename
 
@@ -187,11 +170,8 @@ class Migration:
 
         current_migration = self.get_latest_applied_migration_from_fhir()
         if current_migration and self.migration_sequence.find(current_migration) is None:
-            message = "Applied migration does not exist in the migration system"
-            audit_entry(
-                message,
-                level='info'
-            )
+            message = f"Applied migration {current_migration} does not exist in the migration system"
+            logger.error(message)
 
             raise KeyError(message)
 
@@ -220,11 +200,7 @@ class Migration:
         # Update the migration to acquire most recent updates in the system
         migration_path = os.path.join(self.migrations_dir, self.migrations_locations[next_migration] + ".py")
         try:
-            audit_entry(
-                "running migration",
-                level='info'
-            )
-
+            logger.info("Running the migration")
             migration_module = imp.load_source('migration_module', migration_path)
 
             if direction == "upgrade":
@@ -235,10 +211,7 @@ class Migration:
             self.update_latest_applied_migration_in_fhir(applied_migration)
         except Exception as e:
             message = f"Error executing migration {applied_migration}: {e}"
-            audit_entry(
-                message,
-                level='debug'
-            )
+            logger.error(message)
 
     def get_unapplied_migrations(self, applied_migration) -> list:
         """Retrieve all migrations that have not yet been ran."""
