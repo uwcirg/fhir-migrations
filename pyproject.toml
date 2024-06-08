@@ -1,6 +1,7 @@
 [project]
 name = "fhir-migrations"
 requires-python = "==3.*"
+version = "0.1"
 dependencies = ["flask==1.1.2"]
 
 [build-system]
