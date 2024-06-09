@@ -30,6 +30,20 @@ The Migration module provides methods to manage database migrations in a structu
 
    `pip install -r requirements.txt`
 
+## Flask initialization
+
+In your Flask application, import the migration_blueprint from fhir_migrations.commands and register it with your Flask app. This provides routes for running migration commands:
+
+<pre>
+from flask import Flask
+from fhir_migrations.commands import migration_blueprint
+
+app = Flask(__name__)
+
+# Register the migration blueprint with your Flask app
+app.register_blueprint(migration_blueprint)
+</pre>
+
 ## Usage
 
 To initialize the Migration service and use a specific directory for migration scripts, you need to provide the path to the directory when creating an instance of the Migration class. By default, the service looks for migration scripts in the versions directory located in the same directory as the script.
@@ -53,6 +67,32 @@ migration_service.run_migrations(direction="downgrade")
 # Generating a new migration script
 migration_service.generate_migration_script(migration_name="example_migration")
 </pre>
+
+## Flask Commands
+
+The fhir_migrations package provides several Flask commands for creating and managing migrations. Below is a description of each command:
+
+1. migrate
+   `flask migrate <migration_name>`
+
+Generates a new migration script in Python. The <migration_name> argument specifies the name of the migration file to create.
+
+2. upgrade
+   `flask migrate upgrade`
+
+Runs all unapplied migrations present in the versions folder to upgrade the schema.
+
+3. downgrade
+   `flask migrate downgrade`
+
+Runs the most recent migration to downgrade the schema.
+
+4. reset
+   `flask migrate reset`
+
+Resets the migration state by updating the latest applied migration in FHIR to None.
+
+These commands are used via Flask's command-line interface (CLI) and provide a convenient way to manage migrations in your Flask application.
 
 ## File Structure
 
