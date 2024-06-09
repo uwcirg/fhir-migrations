@@ -6,21 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "fhir_migrations"
 version = "0.1.0"
 
-description = "Migration Module
-
-Captures common methods needed by the system for migration.
-
-When downgrading, the downgrade() function of the currently
-applied migration is being run. Downgrade goes 1 step back.
-When upgrading, the upgrade() function of the to-be-applied
-migration is being run. Upgrade applies all unapplied migrations.
-If cycle is present in the migration order, the error is raised,
-and manual resolution is necessary.
-In order to create a new migration, all existing migrations must
-first be applied.
-You cannot create more than one new migration file at a time.
-For branching/conflict resolution, manually review the migration files." 
-
+description = "The module captures essential methods for system migration, including running downgrade functions for stepping back during downgrades and applying upgrades, which execute upgrade functions for all unapplied migrations, while ensuring that existing migrations are applied before creating new ones." 
 
 # TODO: ask for name
 authors = [
