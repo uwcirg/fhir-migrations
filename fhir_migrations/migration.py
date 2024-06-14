@@ -35,7 +35,10 @@ class Migration:
         '''Initializes Migration class, which contains the logic
         for managing the migration order'''
         if migrations_dir is None:
-            migrations_dir = os.path.join(os.path.dirname(__file__), "versions")
+            migrations_dir = os.path.join(os.path.dirname(__file__), "migration_scripts")
+            if not os.path.exists(migrations_dir):
+                os.makedirs(migrations_dir)
+
         self.migrations_dir = migrations_dir
         self.migration_sequence = LinkedList()
         self.migrations_locations = {}
