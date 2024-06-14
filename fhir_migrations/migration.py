@@ -18,6 +18,7 @@ You cannot create more than one new migration file at a time.
 For branching/conflict resolution, manually review the migration files.
 """
 
+import configparser
 import os
 import uuid
 import imp
@@ -35,9 +36,9 @@ class Migration:
         '''Initializes Migration class, which contains the logic
         for managing the migration order'''
         if migrations_dir is None:
-            migrations_dir = os.path.join(os.path.dirname(__file__), "migration_scripts")
-            if not os.path.exists(migrations_dir):
-                os.makedirs(migrations_dir)
+            config = configparser.ConfigParser()
+            config.read("config.py")
+            migrations_dir = config.get("DEFAULT", "MIGRATION_SCRIPTS_DIR", fallback=os.path.join(os.path.dirname(__file__), "versions"))
 
         self.migrations_dir = migrations_dir
         self.migration_sequence = LinkedList()
