@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fhir_migrations"
-version = "0.0.3"
+version = "0.0.1"
 
 description = "The module captures essential methods for system migration, including running downgrade functions for stepping back during downgrades and applying upgrades, which execute upgrade functions for all unapplied migrations, while ensuring that existing migrations are applied before creating new ones." 
 
