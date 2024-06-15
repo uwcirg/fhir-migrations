@@ -68,6 +68,19 @@ migration_service.run_migrations(direction="downgrade")
 migration_service.generate_migration_script(migration_name="example_migration")
 </pre>
 
+## Configuration
+
+This package allows you to customize the location where migration scripts are stored. By default, the migration scripts will be stored in a directory called `migration_scripts` within your project.
+
+### Changing the Migration Scripts Directory
+
+You can change the location of the migration scripts directory by setting the `MIGRATION_SCRIPTS_DIR` environment variable before running your application or executing any scripts from this package.
+
+#### Unix-based Systems (Linux, macOS)
+
+On Unix-based systems, you can set the `MIGRATION_SCRIPTS_DIR` environment variable like this:
+   `export MIGRATION_SCRIPTS_DIR="/path/to/custom/migration_scripts_directory"`
+
 ## Flask Commands
 
 The fhir_migrations package provides several Flask commands for creating and managing migrations. Below is a description of each command:

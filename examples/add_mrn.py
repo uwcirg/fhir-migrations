@@ -86,7 +86,3 @@ def remove_mrn_from_patient(pat_id, mrn):
             logging.error(f'No patient found with PAT_ID {pat_id}.')
     else:
         logging.error(f'Failed to fetch patient {pat_id}: {response.status_code} {response.text}')
-
-if __name__ == "__main__":
-    # Run the upgrade function
-    upgrade()

@@ -21,7 +21,10 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["fhir_migrations"]
+where = [
+    "migrations",
+    "examples"
+]
 
 [project.optional-dependencies]
 dev = [

@@ -18,27 +18,24 @@ You cannot create more than one new migration file at a time.
 For branching/conflict resolution, manually review the migration files.
 """
 
-import configparser
 import os
 import uuid
 import imp
 import logging
 
+from config import MIGRATION_SCRIPTS_DIR
 from fhir_migrations.migration_resource import MigrationManager
 from fhir_migrations.utils import LinkedList
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-
 class Migration:
     def __init__(self, migrations_dir=None):
         '''Initializes Migration class, which contains the logic
         for managing the migration order'''
         if migrations_dir is None:
-            config = configparser.ConfigParser()
-            config.read("config.py")
-            migrations_dir = config.get("DEFAULT", "MIGRATION_SCRIPTS_DIR", fallback=os.path.join(os.path.dirname(__file__), "versions"))
+            migrations_dir = MIGRATION_SCRIPTS_DIR
 
         self.migrations_dir = migrations_dir
         self.migration_sequence = LinkedList()
