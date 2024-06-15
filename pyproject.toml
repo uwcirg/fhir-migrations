@@ -22,9 +22,9 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = [
+    "fhir_migrations",
     "fhir-migrations/fhir_migrations",
     "fhir-migrations/examples",
-    "tests"
 ]
 
 [project.optional-dependencies]
