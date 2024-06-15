@@ -46,7 +46,10 @@ app.register_blueprint(migration_blueprint)
 
 ## Usage
 
-To initialize the Migration service and use a specific directory for migration scripts, you need to provide the path to the directory when creating an instance of the Migration class. By default, the service looks for migration scripts in the versions directory located in the same directory as the script.
+To initialize the Migration service and use a specific directory for migration scripts, you need to provide the path to the directory when creating an instance of the Migration class. By default, the service looks for scripts in examples directory, and can be altered via specifying MIGRATION_SCRIPTS_DIR enviroment var.  
+- For writing new migrations: the random UUID for the migration's revision id is generated automatically and does not need to be specified by user. The upgrade method is run on `upgrade` flask command, downgrade method is run on `downgrade` flask command. The method declaration for both is provided, but method functionality needs to be filled by the user.
+- For changing or inserting in-between existing migration: if user needs to insert an in-between migration or modify the order of migrations to suit specific needs, they need to manually change revision (current id) and down_revision (id of previously ran migration) of the affected migrations, making sure to reconcile the order and keep it continuous.
+- For deleting existing migration: automatic deleting is currently not supported
 
 <pre>
 import os
@@ -70,7 +73,7 @@ migration_service.generate_migration_script(migration_name="example_migration")
 
 ## Configuration
 
-This package allows you to customize the location where migration scripts are stored. By default, the migration scripts will be stored in a directory called `migration_scripts` within your project.
+This package allows you to customize the location where migration scripts are stored. By default, the migration scripts will be stored in a directory called `examples` within your project.
 
 ### Changing the Migration Scripts Directory
 
@@ -108,20 +111,23 @@ Resets the migration state by updating the latest applied migration in FHIR to N
 These commands are used via Flask's command-line interface (CLI) and provide a convenient way to manage migrations in your Flask application.
 
 ## File Structure
-
-your_project/
-├── migrations/
-│   ├── migration_resource.py
-│   ├── migration_utils.py
-│   └── versions/
-│       ├── 0001_initial_migration.py
-│       └── 0002_add_field_to_table.py
-
+```
+your_project/  
+├── migrations/  
+│   ├── commands.py
+│   ├── migration_resource.py  
+│   ├── migration.py  
+│   └── utils.py  
+├── examples/
+│   ├── add_mrn.py
+│   ├── add_identifier.py
+│   └── create_patient.py 
+```
 ## Example
 
-Provided is a simple migration script that creates a test patient and then modifies it. The operation was limited to one patient to limit potential interference with existing stores. However, the commands used in the examples can be expanded to any number of examples and were limited for the sake of demonstration.
+Provided is a simple set of migration scripts that create a patient and then modify it. The operation was limited to one patient to limit potential interference with existing stores. However, the commands used in the examples can be expanded to any number of examples and were limited for the sake of demonstration.
 The generated migration script will contain basic functions for upgrading and downgrading together with migration ids.
-More example can be found in versions subdirectory.
+More information can be found in examples subdirectory.
 
 Sample migration:
 <pre>
