@@ -23,7 +23,7 @@ import uuid
 import imp
 import logging
 
-from config import MIGRATION_SCRIPTS_DIR
+from fhir_migrations.config import MIGRATION_SCRIPTS_DIR
 from fhir_migrations.migration_resource import MigrationManager
 from fhir_migrations.utils import LinkedList
 
