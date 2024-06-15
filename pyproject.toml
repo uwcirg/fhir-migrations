@@ -22,7 +22,7 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = [
-    "migrations",
+    "fhir_migrations",
     "examples"
 ]
 
