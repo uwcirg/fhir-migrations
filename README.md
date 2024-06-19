@@ -46,8 +46,9 @@ app.register_blueprint(migration_blueprint)
 
 ## Usage
 
-To initialize the Migration service and use a specific directory for migration scripts, you need to provide the path to the directory when creating an instance of the Migration class. By default, the service looks for scripts in examples directory, and can be altered via specifying MIGRATION_SCRIPTS_DIR enviroment var.  
-- For writing new migrations: the random UUID for the migration's revision id is generated automatically and does not need to be specified by user. The upgrade method is run on `upgrade` flask command, downgrade method is run on `downgrade` flask command. The method declaration for both is provided, but method functionality needs to be filled by the user.
+To initialize the Migration service and use a specific directory for migration scripts, you need to provide the path to the desired directory when creating an instance of the Migration class. By default, the service looks for scripts in the nested examples directory, and can be altered via specifying MIGRATION_SCRIPTS_DIR enviroment var.
+
+- For writing new migrations: after running `migrate` command (see details below), new python file with boilerplate code will be generated. It will be assigned a random UUID as that migration's revision id, used to track the migration order. The upgrade method is run on `upgrade` flask command, downgrade method is run on `downgrade` flask command. The method declaration for both functions is provided within each generated migration file, but method functionality needs to be filled by the user.
 - For changing or inserting in-between existing migration: if user needs to insert an in-between migration or modify the order of migrations to suit specific needs, they need to manually change revision (current id) and down_revision (id of previously ran migration) of the affected migrations, making sure to reconcile the order and keep it continuous.
 - For deleting existing migration: automatic deleting is currently not supported
 
@@ -127,7 +128,7 @@ your_project/
 ```
 ## Example
 
-Provided is a simple set of migration scripts that create a patient and then modify it. The operation was limited to one patient to limit potential interference with existing stores. However, the commands used in the examples can be expanded to any number of examples and were limited for the sake of demonstration.
+Provided is a simple set of example migration scripts that create a patient and then modify it. The operation was limited to one patient to limit potential interference with existing stores. However, the commands used in the examples can be expanded to any number of examples and were limited for the sake of demonstration.
 The generated migration script will contain basic functions for upgrading and downgrading together with migration ids.
 More information can be found in examples subdirectory.
 
