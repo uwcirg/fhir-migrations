@@ -1,7 +1,7 @@
 import pytest
-from fhir_migrations.utils import Node, LinkedList
 from pytest import fixture
 
+from fhir_migrations.utils import Node, LinkedList
 
 @fixture
 def linked_list():
