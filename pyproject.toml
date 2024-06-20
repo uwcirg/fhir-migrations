@@ -17,11 +17,10 @@ It is designed to work with a FHIR store:
 - tracks the latest upgrade run against your store in a Basic FHIR resource
 - updates the tracking resource with every new migration run
 
-The module can be used both to generate basic migration code,
+The module can be used both to generate basic migration scripts,
 which then should be updated by the user, and to track the migration process.
 '''
 
-# TODO: ask for name
 authors = [
     { name="CIRG", email="cirg-adm@uw.edu" }
 ]
