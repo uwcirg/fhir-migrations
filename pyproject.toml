@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fhir_migrations"
-dynamic = ["version"]
+version = "0.0.1"
 
 description = '''
 This migration module captures essential methods for system migration and is designed to work with FHIR.
@@ -20,6 +20,10 @@ It is designed to work with a FHIR store:
 The module can be used both to generate basic migration scripts,
 which then should be updated by the user, and to track the migration process.
 '''
+
+summary = "A module for managing migrations in FHIR-based systems."
+
+homepage = "https://github.com/uwcirg/fhir-migrations"
 
 authors = [
     { name="CIRG", email="cirg-adm@uw.edu" }
