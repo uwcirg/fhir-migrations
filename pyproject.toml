@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fhir_migrations"
-dynamic = ["version"]
+version = "0.0.1"
 
 description = '''
 This migration module captures essential methods for system migration and is designed to work with FHIR.
