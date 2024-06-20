@@ -8,6 +8,7 @@ import os
 import requests
 import json
 import logging
+
 from fhirclient.models.basic import Basic
 
 logger = logging.getLogger(__name__)

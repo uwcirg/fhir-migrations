@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=46.1.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fhir_migrations"
+dynamic = ["version"]
+
+description = '''
+This migration module captures essential methods for system migration and is designed to work with FHIR.
+It includes:
+- running downgrade functions for stepping back during downgrades
+- applying upgrades, which execute upgrade functions for all unapplied migrations
+- ensuring that existing migrations are applied before creating new ones
+
+It is designed to work with a FHIR store:
+- tracks the latest upgrade run against your store in a Basic FHIR resource
+- updates the tracking resource with every new migration run
+
+The module can be used both to generate basic migration scripts,
+which then should be updated by the user, and to track the migration process.
+'''
+
+authors = [
+    { name="CIRG", email="cirg-adm@uw.edu" }
+]
+
+dependencies = [
+    "flask",
+    "requests",
+    "fhirclient",
+    "click"
+]
+
+[tool.setuptools.packages.find]
+where = [
+    ""
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest"
+]
+
+[tool.pytest.ini_options]
+addopts = "--color yes --verbose"
+console_output_style = "classic"
+filterwarnings = [
+    "module",
+    "error:.*assertion is always true.*"
+]
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["healthcare", "FHIR", "migrating"]
+license = { text = "BSD-3-Clause" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: FHIR :: Migration",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]

@@ -24,6 +24,12 @@ def upgrade():
     patient_resource = {
         "resourceType": "Patient",
         "id": PATIENT_ID,
+        "identifier": [
+            {
+                "system": "uwDAL_Clarity",
+                "value": "12345"
+            }
+        ],
         "name": [
             {
                 "use": "official",

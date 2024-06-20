@@ -1,8 +1,8 @@
-import os
 import pytest
 from unittest.mock import patch, mock_open
-from fhir_migrations.migration import Migration
 from pytest import fixture
+
+from fhir_migrations.migration import Migration
 
 @fixture
 def migration_instance():
