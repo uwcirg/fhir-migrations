@@ -83,9 +83,12 @@ You can change the location of the migration scripts directory by setting the `M
 #### Unix-based Systems (Linux, macOS)
 
 On Unix-based systems, you can set the `MIGRATION_SCRIPTS_DIR` environment variable like this:
-   `export MIGRATION_SCRIPTS_DIR="/path/to/custom/migration_scripts_directory"`
+
+    export MIGRATION_SCRIPTS_DIR="/path/to/custom/migration_scripts_directory"
+
 Or in the corresponding Dockerfile of your service by specifying MIGRATION_SCRIPTS_DIR 
-   `ENV MIGRATION_SCRIPTS_DIR=$SCRIPT_DIR`
+
+    ENV MIGRATION_SCRIPTS_DIR=$SCRIPT_DIR
 
 ## Flask Commands
 
